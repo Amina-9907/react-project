@@ -9,13 +9,7 @@ pipeline {
     }
 
     stages {
-        stage('checkout') {
-           steps {
-              git https://github.com/Amina-9907/react-project.git  
-           }
-        }
-    
-    
+
         stage('Install dependencies') {
             steps {
                 echo " installer les dependances"
@@ -35,7 +29,7 @@ pipeline {
                 echo " Execution des tests "
                 sh 'npm install'
             }
-        } 
+        }  
 
     }
 }
