@@ -1,8 +1,8 @@
 pipeline {
     agent any
-    tools {
-        nodejs'node-16.20.2'
-    }
+    // tools {
+    //     nodejs'node-16.20.2'
+    // }
 
     environment {
         APP_NAME= "react-example"
