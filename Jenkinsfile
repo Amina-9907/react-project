@@ -33,18 +33,16 @@ pipeline {
                 sh 'npm test'
             }
         }
+
+        
+        
         stage('SonarQube Analysis') {
-            steps {
-                script {
-                    // Exécute l'analyse SonarQube avec la commande sonar-scanner
-                    sh """
-                        sonar-scanner \
-                            -Dsonar.projectKey=$SONARQUBE_PROJECT_KEY \
-                            -Dsonar.host.url=$SONARQUBE_URL \
-                            -Dsonar.login=$SONARQUBE_AUTH_TOKEN
-                    """
+            stage('SonarQube Analysis') {
+                steps {
+                    sh 'sonar-scanner -Dsonar.projectKey=my-node-project -Dsonar.host.url=http://localhost:9000 -Dsonar.login=$SONARQUBE_AUTH_TOKEN'
                 }
             }
+
         }
     }
 
