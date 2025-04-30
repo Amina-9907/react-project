@@ -6,7 +6,9 @@ pipeline {
 
     environment {
         APP_NAME= "react-example"
-        SONARQUBE_SERVER= "sonarqube"
+        SONARQUBE_URL = 'http://192.168.15.115:9000'  
+        SONARQUBE_PROJECT_KEY = 'front'
+        SONARQUBE_AUTH_TOKEN = credentials('sonar-credential')
     }
 
     stages {
@@ -34,14 +36,17 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                    // Exécution de l'analyse SonarQube
-                    withSonarQubeEnv(SONARQUBE_SERVER) {
-                        // Exécution de l'analyse SonarQube avec le scanner pour Node.js
-                        sh 'npm run sonar-scanner'
-                    }
+                    // Exécute l'analyse SonarQube avec la commande sonar-scanner
+                    sh """
+                        sonar-scanner \
+                            -Dsonar.projectKey=$SONARQUBE_PROJECT_KEY \
+                            -Dsonar.host.url=$SONARQUBE_URL \
+                            -Dsonar.login=$SONARQUBE_AUTH_TOKEN
+                    """
                 }
             }
         }
-
     }
+
 }
+
