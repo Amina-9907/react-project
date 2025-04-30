@@ -6,6 +6,7 @@ pipeline {
 
     environment {
         APP_NAME= "react-example"
+        SONARQUBE_SERVER= "sonarqube"
     }
 
     stages {
@@ -27,9 +28,20 @@ pipeline {
         stage('test') {
             steps {
                 echo " Execution des tests "
-                sh 'npm install'
+                sh 'npm test'
             }
-        }  
+        }
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    // Exécution de l'analyse SonarQube
+                    withSonarQubeEnv(SONARQUBE_SERVER) {
+                        // Exécution de l'analyse SonarQube avec le scanner pour Node.js
+                        sh 'npm run sonar-scanner'
+                    }
+                }
+            }
+        }
 
     }
 }
