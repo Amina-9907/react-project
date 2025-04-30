@@ -39,7 +39,7 @@ pipeline {
         stage('SonarQube Analysis') {
             stage('SonarQube Analysis') {
                 steps {
-                    sh 'sonar-scanner -Dsonar.projectKey=my-node-project -Dsonar.host.url=http://localhost:9000 -Dsonar.login=$SONARQUBE_AUTH_TOKEN'
+                    sh 'sonar-scanner -Dsonar.projectKey=front -Dsonar.host.url=http://192.168.15.115:9000 -Dsonar.login=$SONARQUBE_AUTH_TOKEN'
                 }
             }
 
