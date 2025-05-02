@@ -1,9 +1,6 @@
 pipeline {
     agent any
-    // tools {
-    //     nodejs'node-16.20.2'
-    // }
-
+   
     environment {
         APP_NAME= "react-example"
         SONARQUBE_URL = 'http://192.168.15.115:9000'  
@@ -34,12 +31,7 @@ pipeline {
             }
         }
 
-        // stage('SonarQube Analysis') {
-        //     def scannerHome = tool 'SonarScanner';
-        //      withSonarQubeEnv() {
-        //           sh "${scannerHome}/bin/sonar-scanner"
-        //     }    
-        // }
+       
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonarqube') {
@@ -50,17 +42,36 @@ pipeline {
                 }
             }
         }
+        stage('build image Docker') {
+            script {
+                sh 'docker build -t mina0423/accel-images/test_project:v1'
+            }
+        }
+        stage('run container Docker') {
+            script {
+                sh 'docker stop mina0423/accel-images/test_project:v1 || true'
+                sh 'docker rm mina0423/accel-images/test_project:v1 || true'
+                sh 'docker run -d --name test_project  mina0423/accel-images/test_project:v1'
+            }
+        }
+        stage('push image Docker') {
+            steps {
+               withCredentials([usernamePassword(
+                credentialsId: 'docker-registry',
+                usernameVariable: 'DOCKER_USER',
+                passwordVariable: 'DOCKER_PASS'
+               )]) {
+                 sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
+                 sh "docker push mina0423/accel-images/test_project:v1"
+                }
+
+            }
+        }
+
 
         
         
-        // stage('SonarQube Analysis') {
-        //     stage('SonarQube Analysis') {
-        //         steps {
-        //             sh 'sonar-scanner -Dsonar.projectKey=front -Dsonar.host.url=http://192.168.15.115:9000 -Dsonar.login=$SONARQUBE_AUTH_TOKEN'
-        //         }
-        //     }
-
-        // }
+        
     }
 
 }
