@@ -43,15 +43,19 @@ pipeline {
             }
         }
         stage('build image Docker') {
-            script {
-                sh 'docker build -t mina0423/accel-images/test_project:v1'
+            steps {
+                script {
+                    sh 'docker build -t mina0423/accel-images/test_project:v1'
+                }
             }
         }
         stage('run container Docker') {
-            script {
-                sh 'docker stop mina0423/accel-images/test_project:v1 || true'
-                sh 'docker rm mina0423/accel-images/test_project:v1 || true'
-                sh 'docker run -d --name test_project  mina0423/accel-images/test_project:v1'
+            steps {
+                script {
+                    sh 'docker stop mina0423/accel-images/test_project:v1 || true'
+                    sh 'docker rm mina0423/accel-images/test_project:v1 || true'
+                    sh 'docker run -d --name test_project  mina0423/accel-images/test_project:v1'
+                }
             }
         }
         stage('push image Docker') {
@@ -60,9 +64,10 @@ pipeline {
                 credentialsId: 'docker-registry',
                 usernameVariable: 'DOCKER_USER',
                 passwordVariable: 'DOCKER_PASS'
-               )]) {
-                 sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
-                 sh "docker push mina0423/accel-images/test_project:v1"
+               )]) 
+                script {
+                     sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
+                     sh "docker push mina0423/accel-images/test_project:v1"
                 }
 
             }
