@@ -3,9 +3,9 @@ pipeline {
    
     environment {
         APP_NAME= "react-example"
-        SONARQUBE_URL = 'http://192.168.15.115:9000'  
-        SONARQUBE_PROJECT_KEY = 'front'
-        SONARQUBE_AUTH_TOKEN = credentials('sonar-credential')
+        // SONARQUBE_URL = 'http://192.168.15.115:9000'  
+        // SONARQUBE_PROJECT_KEY = 'front'
+        // SONARQUBE_AUTH_TOKEN = credentials('sonar-credential')
     }
 
     stages {
