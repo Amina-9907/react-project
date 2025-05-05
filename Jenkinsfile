@@ -45,16 +45,7 @@ pipeline {
         stage('build image Docker') {
             steps {
                 script {
-                    sh 'docker build -t mina0423/accel-images/test_project:v1'
-                }
-            }
-        }
-        stage('run container Docker') {
-            steps {
-                script {
-                    sh 'docker stop mina0423/accel-images/test_project:v1 || true'
-                    sh 'docker rm mina0423/accel-images/test_project:v1 || true'
-                    sh 'docker run -d --name test_project  mina0423/accel-images/test_project:v1'
+                    sh 'docker build -t mina0423/accel-images/test_project:v1 .'
                 }
             }
         }
@@ -72,6 +63,26 @@ pipeline {
 
             }
         }
+
+        stage('Pull image docker') {
+            steps {
+                script {
+                    sh 'docker pull  mina0423/accel-images/test_project:v1 || echo "Image non trouvée "'
+                }
+            }
+        } 
+
+        
+        stage('run container Docker') {
+            steps {
+                script {
+                    sh 'docker stop mina0423/accel-images/test_project:v1 || true'
+                    sh 'docker rm mina0423/accel-images/test_project:v1 || true'
+                    sh 'docker run -d --name test_project  mina0423/accel-images/test_project:v1'
+                }
+            }
+        }
+        
 
 
         
