@@ -51,7 +51,7 @@ pipeline {
         }
         stage('push image Docker') {
             steps {
-               withCredentials([usernamePassword(credentialsId: 'docker-registry', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+               withCredentials([usernamePassword(credentialsId: 'docker_registry', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     script {
                          sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
                          sh "docker push mina0423/accel-images/test_project:v1"
