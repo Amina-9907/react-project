@@ -45,7 +45,7 @@ pipeline {
         stage('build image Docker') {
             steps {
                 script {
-                    sh 'docker build -t mina0423/accel-images/test_project:v1 .'
+                    sh 'docker build -t mina0423/react_project:v1 .'
                 }
             }
         }
@@ -54,7 +54,7 @@ pipeline {
                withCredentials([usernamePassword(credentialsId: 'docker_registry', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     script {
                          sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
-                         sh "docker push mina0423/accel-images/test_project:v1"
+                         sh "docker push mina0423/react_project:v1"
                     }
                }
             }
@@ -63,7 +63,7 @@ pipeline {
         stage('Pull image docker') {
             steps {
                 script {
-                    sh 'docker pull  mina0423/accel-images/test_project:v1 || echo "Image non trouvée "'
+                    sh 'docker pull  mina0423/react_project:v1 || echo "Image non trouvée "'
                 }
             }
         } 
@@ -72,18 +72,13 @@ pipeline {
         stage('run container Docker') {
             steps {
                 script {
-                    sh 'docker stop mina0423/accel-images/test_project:v1 || true'
-                    sh 'docker rm mina0423/accel-images/test_project:v1 || true'
-                    sh 'docker run -d --name test_project  mina0423/accel-images/test_project:v1'
+                    sh 'docker stop mina0423/react_project:v1 || true'
+                    sh 'docker rm mina0423/react_project:v1 || true'
+                    sh 'docker run -d --name react_project  mina0423/react_project:v1'
                 }
             }
         }
-        
-
-
-        
-        
-        
+               
     }
 
 }
