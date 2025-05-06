@@ -72,8 +72,8 @@ pipeline {
         stage('run container Docker') {
             steps {
                 script {
-                    sh 'docker stop mina0423/react_project:v1 || true'
-                    sh 'docker rm mina0423/react_project:v1 || true'
+                    sh 'docker stop react_project || true'
+                    sh 'docker rm react_project || true'
                     sh 'docker run -d --name react_project  mina0423/react_project:v1'
                 }
             }
