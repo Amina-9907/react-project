@@ -45,7 +45,6 @@ pipeline {
         stage('build image Docker') {
             steps {
                 script {
-                    sh 'docker rmi mina0423/react_project:v1'
                     sh 'docker build -t mina0423/react_project:v1 .'
                 }
             }
