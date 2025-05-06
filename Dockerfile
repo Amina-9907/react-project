@@ -1,7 +1,4 @@
-# Étape 1 : Build de l'app React
-FROM node:latest AS builder
-
-FROM node:latest
+FROM node:18
 
 WORKDIR /app
 
@@ -10,7 +7,8 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 5173 3000
+ENV HOST=0.0.0.0
+
+EXPOSE 3000
 
 CMD ["npm", "run", "dev"]
-
