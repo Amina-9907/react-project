@@ -74,7 +74,7 @@ pipeline {
                 script {
                     sh 'docker stop react_project || true'
                     sh 'docker rm react_project || true'
-                    sh 'docker run -d --name react_project  mina0423/react_project:v1'
+                    sh 'docker run -d --name react_project -p 80:80 mina0423/react_project:v1'
                 }
             }
         }
