@@ -7,7 +7,7 @@ RUN npm install
 
 COPY . .
 
-ENV HOST=0.0.0.0
+ENV HOST=192.168.15.115
 
 EXPOSE 3000
 
